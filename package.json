@@ -1,7 +1,7 @@
 {
-  "name": "",
+  "name": "bookdragons-nettbutikk",
   "version": "1.0.0",
-  "description": "A blank template to get started with Payload 3.0",
+  "description": "Nettbutikk for BookDragons bruktbokhandel",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "3.65.0",
+    "@payloadcms/db-sqlite": "^3.65.0",
     "@payloadcms/next": "3.65.0",
     "@payloadcms/richtext-lexical": "3.65.0",
     "@payloadcms/ui": "3.65.0",
