@@ -237,6 +237,64 @@ body {
   color: #666;
 }
 
+/* Author detail page */
+.author-detail {
+  display: flex;
+  gap: 2rem;
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.author-detail-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.author-detail-info h1 {
+  margin: 0 0 1rem 0;
+  color: var(--primary-color);
+}
+
+.author-bio {
+  color: #666;
+  line-height: 1.6;
+}
+
+.section-title {
+  margin: 2rem 0 1rem 0;
+  color: var(--primary-color);
+}
+
+/* Genre detail page */
+.genre-detail {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.genre-detail h1 {
+  margin: 0 0 0.5rem 0;
+  color: var(--primary-color);
+}
+
+.genre-description {
+  color: #666;
+}
+
+.book-placeholder-small {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  background: #ddd;
+}
+
 /* Genres grid */
 .genres-grid {
   display: grid;
@@ -530,5 +588,11 @@ body {
 
   .checkout-content {
     grid-template-columns: 1fr;
+  }
+
+  .author-detail {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 }
