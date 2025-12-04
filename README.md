@@ -1,67 +1,119 @@
-# Payload Blank Template
+# 📚 BookDragons - Bruktbokhandel
 
-This template comes configured with the bare minimum to get started on anything you need.
+En nettbutikk for brukte bøker bygget med Payload CMS og Next.js.
 
-## Quick start
+## 🚀 Kom i gang
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+### Forutsetninger
 
-## Quick Start - local setup
+- Node.js 18+
+- npm eller yarn
 
-To spin up this template locally, follow these steps:
+### Installasjon
 
-### Clone
+```bash
+# Klon repositoryet
+git clone https://github.com/RaphaelMantesso/bookdragons-nettbutikk.git
+cd bookdragons-nettbutikk
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+# Installer avhengigheter
+npm install
 
-### Development
+# Start utviklingsserver
+npm run dev
+```
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URI` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+Åpne [http://localhost:3000](http://localhost:3000) i nettleseren.
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+### Admin-panel
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+Gå til [http://localhost:3000/admin](http://localhost:3000/admin) for å administrere innhold.
 
-#### Docker (Optional)
+Ved første besøk må du opprette en admin-bruker.
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+## 📦 Teknologier
 
-To do so, follow these steps:
+| Teknologi | Beskrivelse |
+|-----------|-------------|
+| [Payload CMS](https://payloadcms.com/) | Headless CMS for innholdshåndtering |
+| [Next.js 15](https://nextjs.org/) | React-rammeverk med App Router |
+| [React 19](https://react.dev/) | Frontend-bibliotek |
+| [TypeScript](https://www.typescriptlang.org/) | Type-sikker JavaScript |
+| [SQLite](https://www.sqlite.org/) | Lokal database |
 
-- Modify the `MONGODB_URI` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URI` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+## 🗂️ Prosjektstruktur
 
-## How it works
+```
+src/
+├── app/
+│   ├── (frontend)/      # Kundevendte sider
+│   │   ├── page.tsx         # Forside med alle bøker
+│   │   ├── books/[id]/      # Bokdetaljer
+│   │   ├── authors/         # Forfatterliste og detaljer
+│   │   ├── genres/          # Sjangerliste og detaljer
+│   │   ├── cart/            # Handlekurv
+│   │   └── checkout/        # Bestillingsskjema
+│   └── (payload)/       # Admin-panel (Payload CMS)
+├── collections/         # Payload innholdssamlinger
+│   ├── Authors.ts
+│   ├── Books.ts
+│   ├── Genres.ts
+│   ├── Orders.ts
+│   └── Media.ts
+├── components/          # Gjenbrukbare React-komponenter
+│   ├── BookCard.tsx
+│   ├── Button.tsx
+│   └── Dashboard.tsx
+└── payload.config.ts    # Payload konfigurasjon
+```
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+## 📋 Funksjonalitet
 
-### Collections
+### For kunder
+- ✅ Se alle bøker til salgs
+- ✅ Se detaljer om en bok
+- ✅ Filtrere bøker etter forfatter
+- ✅ Filtrere bøker etter sjanger
+- ✅ Legge bøker i handlekurv
+- ✅ Sende bestilling
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+### For ansatte (admin)
+- ✅ Legge til, redigere og slette bøker
+- ✅ Legge til, redigere og slette forfattere
+- ✅ Legge til, redigere og slette sjangere
+- ✅ Se alle bestillinger
+- ✅ Oppdatere status på bestillinger
+- ✅ Dashboard med statistikk
 
-- #### Users (Authentication)
+## 🎨 Tilgjengelighet (UU)
 
-  Users are auth-enabled collections that have access to the admin panel.
+- Skip-link for tastaturnavigasjon
+- ARIA-labels på interaktive elementer
+- Semantisk HTML (`<header>`, `<main>`, `<nav>`, `<footer>`)
+- Focus-states for tastaturbrukere
+- Responsivt design
 
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/main/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
+## 🧪 Scripts
 
-- #### Media
+```bash
+npm run dev      # Start utviklingsserver
+npm run build    # Bygg for produksjon
+npm run start    # Start produksjonsserver
+npm run seed     # Legg til testdata
+```
 
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
+## 📝 Testdata
 
-### Docker
+For å legge til eksempeldata (bøker, forfattere, sjangere):
 
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
+```bash
+npx tsx src/seed.ts
+```
 
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
+## 👤 Forfatter
 
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
+Raphael Mantesso - Gokstad Akademiet
 
-## Questions
+## 📄 Lisens
 
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
+ISC
