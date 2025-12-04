@@ -13,21 +13,28 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="no">
       <body>
-        <header className="header">
+        <a href="#main-content" className="skip-link">
+          Hopp til hovedinnhold
+        </a>
+        <header className="header" role="banner">
           <div className="header-content">
-            <Link href="/" className="logo">
+            <Link href="/" className="logo" aria-label="BookDragons - Gå til forsiden">
               📚 BookDragons
             </Link>
-            <nav className="nav">
+            <nav className="nav" role="navigation" aria-label="Hovednavigasjon">
               <Link href="/">Bøker</Link>
               <Link href="/authors">Forfattere</Link>
               <Link href="/genres">Sjangere</Link>
-              <Link href="/cart">Handlekurv</Link>
+              <Link href="/cart" aria-label="Handlekurv">
+                🛒 Handlekurv
+              </Link>
             </nav>
           </div>
         </header>
-        <main className="main-content">{children}</main>
-        <footer className="footer">
+        <main id="main-content" className="main-content" role="main">
+          {children}
+        </main>
+        <footer className="footer" role="contentinfo">
           <p>© 2025 BookDragons - Bruktbokhandel</p>
         </footer>
       </body>

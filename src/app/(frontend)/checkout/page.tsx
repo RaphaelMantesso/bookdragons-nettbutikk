@@ -10,6 +10,12 @@ interface CartItem {
   quantity: number
 }
 
+interface FormErrors {
+  name?: string
+  email?: string
+  phone?: string
+}
+
 export default function CheckoutPage() {
   const router = useRouter()
   const [cart, setCart] = useState<CartItem[]>([])
@@ -18,6 +24,7 @@ export default function CheckoutPage() {
     email: '',
     phone: '',
   })
+  const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [orderPlaced, setOrderPlaced] = useState(false)
 
@@ -30,8 +37,36 @@ export default function CheckoutPage() {
 
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {}
+
+    if (!formData.name.trim()) {
+      newErrors.name = 'Navn er påkrevd'
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Navn må være minst 2 tegn'
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'E-post er påkrevd'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Ugyldig e-postadresse'
+    }
+
+    if (formData.phone && !/^[0-9\s+()-]{8,}$/.test(formData.phone)) {
+      newErrors.phone = 'Ugyldig telefonnummer'
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!validateForm()) {
+      return
+    }
+
     setIsSubmitting(true)
 
     try {
@@ -90,26 +125,40 @@ export default function CheckoutPage() {
       <div className="checkout-content">
         <div className="checkout-form">
           <h2>Dine opplysninger</h2>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate>
             <div className="form-group">
-              <label htmlFor="name">Navn</label>
+              <label htmlFor="name">Navn *</label>
               <input
                 type="text"
                 id="name"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                required
+                aria-describedby={errors.name ? 'name-error' : undefined}
+                aria-invalid={!!errors.name}
+                autoComplete="name"
               />
+              {errors.name && (
+                <span id="name-error" className="form-error" role="alert">
+                  {errors.name}
+                </span>
+              )}
             </div>
             <div className="form-group">
-              <label htmlFor="email">E-post</label>
+              <label htmlFor="email">E-post *</label>
               <input
                 type="email"
                 id="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
+                aria-describedby={errors.email ? 'email-error' : undefined}
+                aria-invalid={!!errors.email}
+                autoComplete="email"
               />
+              {errors.email && (
+                <span id="email-error" className="form-error" role="alert">
+                  {errors.email}
+                </span>
+              )}
             </div>
             <div className="form-group">
               <label htmlFor="phone">Telefon</label>
@@ -118,9 +167,22 @@ export default function CheckoutPage() {
                 id="phone"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                aria-describedby={errors.phone ? 'phone-error' : undefined}
+                aria-invalid={!!errors.phone}
+                autoComplete="tel"
               />
+              {errors.phone && (
+                <span id="phone-error" className="form-error" role="alert">
+                  {errors.phone}
+                </span>
+              )}
             </div>
-            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={isSubmitting}
+              aria-busy={isSubmitting}
+            >
               {isSubmitting ? 'Sender...' : 'Send bestilling'}
             </button>
           </form>
@@ -144,4 +206,3 @@ export default function CheckoutPage() {
     </div>
   )
 }
-

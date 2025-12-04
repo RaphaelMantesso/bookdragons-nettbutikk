@@ -25,9 +25,7 @@ export default function CartPage() {
       removeItem(id)
       return
     }
-    const newCart = cart.map((item) =>
-      item.id === id ? { ...item, quantity: newQuantity } : item
-    )
+    const newCart = cart.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item))
     setCart(newCart)
     localStorage.setItem('bookdragons-cart', JSON.stringify(newCart))
   }
@@ -45,7 +43,7 @@ export default function CartPage() {
       <h1 className="page-title">Handlekurv</h1>
 
       {cart.length === 0 ? (
-        <div className="cart-empty">
+        <div className="cart-empty" role="status">
           <p>Handlekurven er tom.</p>
           <Link href="/" className="btn btn-primary">
             Se våre bøker
@@ -53,35 +51,43 @@ export default function CartPage() {
         </div>
       ) : (
         <div className="cart-content">
-          <div className="cart-items">
+          <ul className="cart-items" role="list" aria-label="Produkter i handlekurven">
             {cart.map((item) => (
-              <div key={item.id} className="cart-item">
+              <li key={item.id} className="cart-item">
                 <div className="cart-item-info">
-                  <h3>{item.title}</h3>
+                  <h2 className="cart-item-title">{item.title}</h2>
                   <p className="cart-item-price">{item.price} kr</p>
                 </div>
                 <div className="cart-item-actions">
                   <button
                     className="quantity-btn"
                     onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    aria-label={`Reduser antall av ${item.title}`}
                   >
                     -
                   </button>
-                  <span className="quantity">{item.quantity}</span>
+                  <span className="quantity" aria-live="polite" aria-label="Antall">
+                    {item.quantity}
+                  </span>
                   <button
                     className="quantity-btn"
                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    aria-label={`Øk antall av ${item.title}`}
                   >
                     +
                   </button>
-                  <button className="remove-btn" onClick={() => removeItem(item.id)}>
+                  <button
+                    className="remove-btn"
+                    onClick={() => removeItem(item.id)}
+                    aria-label={`Fjern ${item.title} fra handlekurven`}
+                  >
                     Fjern
                   </button>
                 </div>
-              </div>
+              </li>
             ))}
-          </div>
-          <div className="cart-summary">
+          </ul>
+          <div className="cart-summary" aria-live="polite">
             <p className="cart-total">
               <strong>Totalt: {totalPrice} kr</strong>
             </p>
@@ -94,4 +100,3 @@ export default function CartPage() {
     </div>
   )
 }
-

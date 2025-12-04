@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
-import type { Genre } from '@/payload-types'
 
 export default async function GenresPage() {
   const payload = await getPayload({ config })
@@ -15,17 +14,19 @@ export default async function GenresPage() {
     <div>
       <h1 className="page-title">Sjangere</h1>
 
-      <div className="genres-grid">
+      <section className="genres-grid" aria-label="Liste over sjangere">
         {genres.map((genre) => (
-          <Link href={`/genres/${genre.id}`} key={genre.id} className="genre-card">
+          <Link
+            href={`/genres/${genre.id}`}
+            key={genre.id}
+            className="genre-card"
+            aria-label={`Se bøker i sjangeren ${genre.name}`}
+          >
             <h2 className="genre-card-name">{genre.name}</h2>
-            {genre.description && (
-              <p className="genre-card-description">{genre.description}</p>
-            )}
+            {genre.description && <p className="genre-card-description">{genre.description}</p>}
           </Link>
         ))}
-      </div>
+      </section>
     </div>
   )
 }
-

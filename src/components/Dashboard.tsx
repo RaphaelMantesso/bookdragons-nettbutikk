@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
 
 interface Stats {
   totalBooks: number
@@ -35,9 +34,8 @@ export default function Dashboard() {
         const genres = await genresRes.json()
         const orders = await ordersRes.json()
 
-        const pendingOrders = orders.docs?.filter(
-          (o: { status: string }) => o.status === 'pending'
-        ).length || 0
+        const pendingOrders =
+          orders.docs?.filter((o: { status: string }) => o.status === 'pending').length || 0
 
         setStats({
           totalBooks: books.totalDocs || 0,
@@ -102,9 +100,7 @@ export default function Dashboard() {
 
   return (
     <div style={{ padding: '2rem' }}>
-      <h1 style={{ marginBottom: '1.5rem', color: '#333' }}>
-        Velkommen til BookDragons Admin
-      </h1>
+      <h1 style={{ marginBottom: '1.5rem', color: '#333' }}>Velkommen til BookDragons Admin</h1>
 
       <div style={gridStyle}>
         <div style={cardStyle}>
@@ -157,4 +153,3 @@ export default function Dashboard() {
     </div>
   )
 }
-
