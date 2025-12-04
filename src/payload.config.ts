@@ -22,6 +22,9 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      afterDashboard: ['@/components/Dashboard'],
+    },
   },
   collections: [Users, Media, Authors, Genres, Books, Orders],
   editor: lexicalEditor(),
